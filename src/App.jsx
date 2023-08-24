@@ -52,6 +52,7 @@ function App() {
         gastoState.id === gasto.id ? gasto : gastoState
       );
       setGastos(gastosActualizados);
+      setGastoEditar({});
     } else {
       // Nuevo gasto
       gasto.id = generarId();
@@ -67,6 +68,12 @@ function App() {
     }, 500);
   };
 
+  const eliminarGasto = (id) => {
+    const gastosActualizados = gastos.filter((gasto) => gasto.id !== id);
+
+    setGastos(gastosActualizados);
+  };
+
   return (
     <div className={modal ? "fijar" : undefined}>
       <Header
@@ -79,7 +86,11 @@ function App() {
       {presupuestoValido && (
         <>
           <main>
-            <ListadoGastos gastos={gastos} setGastoEditar={setGastoEditar} />
+            <ListadoGastos
+              gastos={gastos}
+              setGastoEditar={setGastoEditar}
+              eliminarGasto={eliminarGasto}
+            />
           </main>
           <div className="nuevo-gasto">
             <img
@@ -98,6 +109,7 @@ function App() {
           setAnimarModal={setAnimarModal}
           guardarGasto={guardarGasto}
           gastoEditar={gastoEditar}
+          setGastoEditar={setGastoEditar}
         />
       )}
     </div>
